@@ -24,10 +24,6 @@ def sample_pdf_bytes():
 @pytest.fixture
 def valid_payload(sample_pdf_bytes):
     return {
-        "files": {
-            "cv_file": ("cv.pdf", sample_pdf_bytes, "application/pdf")
-        },
-        "data": {
-            "job_url": "https://example.com/job-offer"
-        },
+        "files": {"cv_file": ("cv.pdf", sample_pdf_bytes, "application/pdf")},
+        "data": {"job_url": "https://example.com/job-offer"},
     }
