@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 
-@patch("main.get_tailored_results")
+@patch("backend.api.get_tailored_results")
 def test_tailor_cv_success(mock_get_results, api_client, valid_payload):
     mock_get_results.return_value = (
         "success",
@@ -27,4 +27,3 @@ def test_tailor_cv_missing_file(api_client):
     )
 
     assert response.status_code == 422
-    
