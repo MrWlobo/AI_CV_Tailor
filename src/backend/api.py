@@ -5,10 +5,7 @@ from pypdf import PdfReader
 app = FastAPI()
 
 @app.post("/tailor")
-async def tailor_cv(
-    cv_file: UploadFile = File(...),
-    job_url: str = Form(...),
-):
+async def tailor_cv(cv_file: UploadFile = File(...), job_url: str = Form(...)):
     # Get CV content as bytes
     cv_bytes = await cv_file.read()
 
@@ -27,3 +24,11 @@ async def tailor_cv(
         "match_score": match_score,
         "recommendations": recommendations,
     }
+
+def get_tailored_results(cv_text: str, job_url: str):
+    return (
+        "success",
+        f"Tailored CV content generated from {len(cv_text)} characters",
+        85,
+        ["Add Python keywords", "Highlight FastAPI experience"],
+    )
