@@ -15,4 +15,15 @@ async def tailor_cv(
     # Transform bytes to readable content
     pdf_stream = io.BytesIO(cv_bytes)
     reader = PdfReader(pdf_stream)
-    cv_text = "".join([page.extract_text() for page in reader.pages])
+    cv_text = "".join([page.extract_text() or "" for page in reader.pages])
+
+    # Call LLM to make its assessments
+    status, tailored_cv, match_score, recommendations = get_tailored_results(cv_text, job_url)
+
+    # Return results to frontend
+    return {
+        "status": status,
+        "tailored_cv": tailored_cv,
+        "match_score": match_score,
+        "recommendations": recommendations,
+    }
