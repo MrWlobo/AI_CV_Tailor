@@ -6,9 +6,10 @@ const jobOfferTextarea = document.getElementById("job-offer-textarea")
 const submitButton = document.getElementById("submit-button");
 const outputDiv = document.getElementById("output");
 const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
-const recommendationsParagraph = document.getElementById("recommendations-paragraph");
+const recommendationsList = document.getElementById("recommendations-list");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
+const spinner = document.getElementById("loading-spinner");
 
 let cvFile = null;
 
@@ -70,7 +71,12 @@ function updateTailoredCv(tailoredCv) {
 }
 
 function updateRecommendations(recommendations) {
-    recommendationsParagraph.textContent = recommendations.join(", ");
+    recommendationsList.innerHTML = "";
+    for (const recommendation of recommendations) {
+        const newRecommendationItem = document.createElement("li");
+        newRecommendationItem.textContent = recommendation;
+        recommendationsList.appendChild(newRecommendationItem);
+    }
 }
 
 // Submit Button
@@ -80,15 +86,25 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
-    const jobOffer = jobOfferTextarea.value;
-    const result = await tailorCv(cvFile, jobOffer);
+    spinner.classList.remove("hidden");
+    submitButton.disabled = true;
 
-    if (result) {
-        updateTailoredCv(result["tailored_cv"]);
-        updateMatchChart(result["match_score"]);
-        updateRecommendations(result["recommendations"]);
+    try {
+        const jobOffer = jobOfferTextarea.value;
+        const result = await tailorCv(cvFile, jobOffer);
 
-        outputDiv.classList.remove("hidden");
+        if (result) {
+            updateTailoredCv(result["tailored_cv"]);
+            updateMatchChart(result["match_score"]);
+            updateRecommendations(result["recommendations"]);
+
+            outputDiv.classList.remove("hidden");
+        }
+    } catch (error) {
+        alert("Failed to tailor CV. Check the logs for more info.");
+    } finally {
+        spinner.classList.add("hidden");
+        submitButton.disabled = false;
     }
 });
 
