@@ -32,17 +32,12 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...))
         # Call LLM to make its assessments
         tailored_results = get_tailored_results(cv_text, job_offer)
 
-        status = tailored_results["status"]
-        tailored_cv = tailored_results["tailored_cv"]
-        match_score = tailored_results["match_score"]
-        recommendations = tailored_results["recommendations"]
-
         # Return results to frontend
         return {
-            "status": status,
-            "tailored_cv": tailored_cv,
-            "match_score": match_score,
-            "recommendations": recommendations,
+            "status": tailored_results.status,
+            "tailored_cv": tailored_results.tailored_cv,
+            "match_score": tailored_results.match_score,
+            "recommendations": tailored_results.recommendations,
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
