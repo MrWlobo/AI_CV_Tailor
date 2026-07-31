@@ -6,7 +6,7 @@ const jobOfferTextarea = document.getElementById("job-offer-textarea")
 const submitButton = document.getElementById("submit-button");
 const outputDiv = document.getElementById("output");
 const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
-const recommendationsParagraph = document.getElementById("recommendations-paragraph");
+const recommendationsList = document.getElementById("recommendations-list");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
 const spinner = document.getElementById("loading-spinner");
@@ -71,7 +71,12 @@ function updateTailoredCv(tailoredCv) {
 }
 
 function updateRecommendations(recommendations) {
-    recommendationsParagraph.textContent = recommendations.join(", ");
+    recommendationsList.innerHTML = "";
+    for (const recommendation of recommendations) {
+        const newRecommendationItem = document.createElement("li");
+        newRecommendationItem.textContent = recommendation;
+        recommendationsList.appendChild(newRecommendationItem);
+    }
 }
 
 // Submit Button
