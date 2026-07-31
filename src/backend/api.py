@@ -5,6 +5,9 @@ from backend.llm_integration import get_tailored_results
 
 app = FastAPI()
 
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 
 @app.post("/tailor")
 async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...)):
