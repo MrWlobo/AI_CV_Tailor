@@ -98,7 +98,7 @@ function tailorCv (cv_file, job_offer) {
     formData.append("cv_file", cv_file);
     formData.append("job_offer", job_offer);
 
-    return fetch(`http://localhost:8080/api/tailor`,
+    return fetch(`http://localhost:8080/tailor`,
         {
             method: `POST`,
             body: formData
