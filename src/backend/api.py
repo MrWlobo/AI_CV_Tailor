@@ -7,7 +7,7 @@ app = FastAPI()
 
 
 @app.post("/tailor")
-async def tailor_cv(cv_file: UploadFile = File(...), job_url: str = Form(...)):
+async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...)):
     # Get CV content as bytes
     cv_bytes = await cv_file.read()
 
@@ -18,7 +18,7 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_url: str = Form(...)):
 
     # Call LLM to make its assessments
     tailored_results = get_tailored_results(
-        cv_text, job_url
+        cv_text, job_offer
     )
 
     status = tailored_results["status"]
