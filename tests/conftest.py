@@ -2,6 +2,7 @@ import io
 import pytest
 from fastapi.testclient import TestClient
 from backend.api import app
+from backend.llm_integration import CVTailorResponse
 
 
 @pytest.fixture
@@ -27,3 +28,13 @@ def valid_payload(sample_pdf_bytes):
         "files": {"cv_file": ("cv.pdf", sample_pdf_bytes, "application/pdf")},
         "data": {"job_url": "https://example.com/job-offer"},
     }
+
+
+@pytest.fixture
+def mock_cv_response():
+    return CVTailorResponse(
+        status="success",
+        tailored_cv="Improved CV content here...",
+        match_score=85,
+        recommendations=["Add Python keywords", "Highlight leadership skills"],
+    )
