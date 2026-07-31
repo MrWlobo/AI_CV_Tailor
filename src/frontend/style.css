@@ -88,6 +88,34 @@ label {
   display: none;
 }
 
+.chart-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.doughnut-chart {
+  --percentage: 0%; 
+  
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(rgb(5, 113, 40) var(--percentage), rgb(15, 15, 15) var(--percentage));
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 0 15px rgb(20, 20, 20);
+  
+  transition: background 0.3s ease;
+}
+
+.chart-value {
+  font-size: 2em;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
 #output {
     width: 50vw;
     text-align: center;

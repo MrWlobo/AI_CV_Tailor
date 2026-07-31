@@ -38,3 +38,15 @@ dropZone.addEventListener("drop", (e) => {
         fileNameDisplay.textContent = `Selected: ${droppedFiles[0].name}`;
     }
 });
+
+// Match Doughnut Chart
+function updateMatchChart(score) {
+    const chart = document.getElementById('match-chart');
+    const percentageText = document.getElementById('chart-percentage');
+
+    percentageText.textContent = `${score}%`;
+
+    chart.style.setProperty('--percentage', `${score}%`);
+}
+
+updateMatchChart(80);
