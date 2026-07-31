@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UFT-8">
         <title>AI CV Tailor</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>AI CV Tailor</h1>
+        <main>
+            <h1>AI CV Tailor</h1>
+            <br>
+            <form>
+                <div class="drop-zone" id="drop-zone">
+                    <input type="file" id="cv-file" accept=".pdf" class="hidden" />
+                    <div class="drop-zone-content">
+                        <p>Drag and drop CV here or <strong>click to select.</strong></p>
+                        <span id="drop-file-name"></span>
+                    </div>
+                </div>
+                <br>
+                <label for="comments-input">Job Offer</label>
+                <textarea id="comments-input"  rows="15" cols="35"></textarea>
+            </form>
+            <button id="submit-button">Submit</button>
+            <br>
+            <div id="output" class="hidden">
+                <h2>Tailored CV</h2>
+                <p id="tailored-cv-paragraph"></p>
+                <br >
+                <h2>Match Score</h2>
+                <div class="chart-container">
+                    <div class="doughnut-chart" id="match-chart">
+                        <span class="chart-value" id="chart-percentage">--%</span>
+                    </div>
+                </div>
+                <br>
+                <h2>Recommendations</h2>
+                <p id="recommendations-paragraph"></p>
+            </div>
+        </main>
+        <footer>AI CV Tailor 2026</footer>
+        <script src="script.js"></script>
     </body>
 </html>

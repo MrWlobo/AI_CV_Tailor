@@ -35,9 +35,24 @@ jobs:
           GOOGLE_API_KEY: "fake-key-for-gha-testing"
         run: uv run pytest --cov=. --cov-report=term-missing
 
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: HTMLHint Validation
+        run: npx htmlhint "src/frontend/**/*.html"
+
   docker:
     runs-on: ubuntu-latest
-    needs: backend
+    needs: [backend, frontend]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -61,7 +76,8 @@ jobs:
             sleep 1
           done
           echo "Backend failed to become healthy in time."
-          docker c
+          docker compose logs
+          exit 1
 
       - name: Stop containers
         if: always()
