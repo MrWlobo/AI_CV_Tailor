@@ -1,4 +1,5 @@
 import pytest
+import os
 from unittest.mock import MagicMock, patch
 from backend.llm_integration import (
     CVTailorResponse,
@@ -32,6 +33,10 @@ def test_get_tailored_results_unit(mock_cv_response):
 
 
 @pytest.mark.integration
+@pytest.mark.skipif(
+    "fake" in os.getenv("GOOGLE_API_KEY", "") or not os.getenv("GOOGLE_API_KEY"),
+    reason="Missing or fake GOOGLE_API_KEY. Skipping real API call.",
+)
 def test_get_tailored_results_integration():
     cv_input = "Software Engineer with knowledge of Python, Docker, and SQL."
     job_input = "Hiring Python Developer with Docker experience."
