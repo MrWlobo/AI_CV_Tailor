@@ -70,7 +70,7 @@ function updateTailoredCv(tailoredCv) {
 }
 
 function updateRecommendations(recommendations) {
-    tailoredCvParagraph.textContent = recommendations.join(", ");
+    recommendationsParagraph.textContent = recommendations.join(", ");
 }
 
 // Submit Button
