@@ -71,6 +71,18 @@ label {
     text-align: center;
 }
 
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0px;
+    list-style-type: none;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow-x: hidden
+}
+
 .drop-zone {
   border: 2px dashed rgb(5, 113, 40);
   border-radius: 8px;
