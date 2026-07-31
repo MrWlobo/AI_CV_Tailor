@@ -17,9 +17,7 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...))
     cv_text = "".join([page.extract_text() or "" for page in reader.pages])
 
     # Call LLM to make its assessments
-    tailored_results = get_tailored_results(
-        cv_text, job_offer
-    )
+    tailored_results = get_tailored_results(cv_text, job_offer)
 
     status = tailored_results["status"]
     tailored_cv = tailored_results["tailored_cv"]
