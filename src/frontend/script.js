@@ -73,11 +73,23 @@ function updateRecommendations(recommendations) {
 }
 
 // Submit Button
-submitButton.addEventListener("click", () => {
+submitButton.addEventListener("click", async () => {
+    if (!cvFile) {
+        alert("No CV file was added.");
+        return;
+    }
 
+    const jobOffer = jobOfferTextarea.value;
+    const result = await tailorCv(cvFile, jobOffer);
 
-    outputDiv.classList.remove("hidden");
-})
+    if (result) {
+            updateTailoredCv(result["tailored_cv"]);
+            updateMatchChart(result["match_score"]);
+            updateRecommendations(result["recommendations"]);
+
+            outputDiv.classList.remove("hidden");
+    }
+});
 
 // Connection to FastAPI
 function tailorCv (cv_file, job_offer) {
