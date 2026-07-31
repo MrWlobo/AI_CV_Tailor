@@ -1,14 +1,15 @@
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 
 @patch("backend.api.get_tailored_results")
 def test_tailor_cv_success(mock_get_results, api_client, valid_payload):
-    mock_get_results.return_value = {
-        "status": "success",
-        "tailored_cv": "Tailored text",
-        "match_score": 90,
-        "recommendations": ["Skill 1"],
-    }
+    mock_response = MagicMock()
+    mock_response.status = "success"
+    mock_response.tailored_cv = "Tailored text"
+    mock_response.match_score = 90
+    mock_response.recommendations = ["Skill 1"]
+
+    mock_get_results.return_value = mock_response
 
     response = api_client.post(
         "/tailor",

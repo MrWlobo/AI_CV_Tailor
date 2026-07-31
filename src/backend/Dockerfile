@@ -24,4 +24,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 
-CMD ["uvicorn", "src.backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.backend.api:app", "--host", "0.0.0.0", "--port", "8000"]
