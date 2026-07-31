@@ -30,29 +30,22 @@ system_prompt = """
 
     Your input will hav the form of the following f-string:
     f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"
-
-    You MUST return ONLY the json of a following structure as your response:
-    {
-        "status": "success" or "failure",
-        "tailored_cv": improved CV as a string,
-        "match_score": integer from 0 to 100 including 0 and 100,
-        "recommendations": short reccomendations for the user as a list of strings,
-    }
-    DO NOT return any additional messages.
     """
 
-model = init_chat_model(
+base_model = init_chat_model(
     model="gemini-2.5-flash",
     model_provider="google_genai",
     temperature=0.1,
-    system_prompt=system_prompt,
 )
 
-def get_tailored_results(cv_transcript: str, job_offer: str):
-    response = model.invoke({
-        "messages": [
-            {"role": "user", "content": f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"}
-        ]
-    })
+model = base_model.with_structured_output(CVTailorResponse)
 
-    return response
+def get_tailored_results(cv_transcript: str, job_offer: str):
+    user_content = f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"
+    
+    response = model.invoke([
+        ("system", system_prompt),
+        ("user", user_content)
+    ])
+
+    return response 
