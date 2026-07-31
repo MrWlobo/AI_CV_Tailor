@@ -12,6 +12,9 @@ system_prompt = """
     Your task is to grade how well the CV matches the offer on a scale 0-100, return
     an improved version of CV and provide the user with some concise recommendations.
 
+    Your input will hav the form of the following f-string:
+    f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"
+
     You MUST return ONLY the json of a following structure as your response:
     {
         "status": "success" or "failure",
@@ -28,3 +31,12 @@ model = init_chat_model(
     temperature=0.1,
     system_prompt=system_prompt,
 )
+
+def get_tailored_results(cv_transcript: str, job_offer: str):
+    response = model.invoke({
+        "messages": [
+            {"role": "user", "content": f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"}
+        ]
+    })
+
+    return response
