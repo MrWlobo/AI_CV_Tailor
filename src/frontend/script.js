@@ -9,6 +9,7 @@ const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
 const recommendationsParagraph = document.getElementById("recommendations-paragraph");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
+const spinner = document.getElementById("loading-spinner");
 
 let cvFile = null;
 
@@ -80,15 +81,25 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
-    const jobOffer = jobOfferTextarea.value;
-    const result = await tailorCv(cvFile, jobOffer);
+    spinner.classList.remove("hidden");
+    submitButton.disabled = true;
 
-    if (result) {
-        updateTailoredCv(result["tailored_cv"]);
-        updateMatchChart(result["match_score"]);
-        updateRecommendations(result["recommendations"]);
+    try {
+        const jobOffer = jobOfferTextarea.value;
+        const result = await tailorCv(cvFile, jobOffer);
 
-        outputDiv.classList.remove("hidden");
+        if (result) {
+            updateTailoredCv(result["tailored_cv"]);
+            updateMatchChart(result["match_score"]);
+            updateRecommendations(result["recommendations"]);
+
+            outputDiv.classList.remove("hidden");
+        }
+    } catch (error) {
+        alert("Failed to tailor CV. Check the logs for more info.");
+    } finally {
+        spinner.classList.add("hidden");
+        submitButton.disabled = false;
     }
 });
 
