@@ -63,3 +63,36 @@ function updateRecommendations(recommendations) {
 submitButton.addEventListener("click", () => {
     outputDiv.classList.remove("hidden");
 })
+
+// Connection to FastAPI
+function tailorCv (cv_file, job_offer) {
+    const formData = new FormData();
+    formData.append("cv_file", cv_file);
+    formData.append("job_offer", job_offer);
+
+    return fetch(`http://localhost:8080/api/tailor`,
+        {
+            method: `POST`,
+            body: formData
+        }
+    )
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+        }
+        if (response.status === 204) {
+            return null; 
+        }
+        
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            console.log("CV tailored successfully:", data);
+        } else {
+            console.log("CV tailored successfully.");
+        }
+        return data;
+    })
+    .catch(error => console.error("Error while tailoring the CV:", error));
+}
