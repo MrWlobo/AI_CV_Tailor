@@ -1,6 +1,11 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from backend.llm_integration import CVTailorResponse, get_tailored_results, system_prompt
+from backend.llm_integration import (
+    CVTailorResponse,
+    get_tailored_results,
+    system_prompt,
+)
+
 
 def test_get_tailored_results_unit(mock_cv_response):
     cv_input = "Python Developer with 3 years of experience..."
@@ -12,10 +17,10 @@ def test_get_tailored_results_unit(mock_cv_response):
         result = get_tailored_results(cv_input, job_input)
 
         mock_model.invoke.assert_called_once()
-        
+
         args, _ = mock_model.invoke.call_args
         messages = args[0]
-        
+
         assert messages[0] == ("system", system_prompt)
         assert cv_input in messages[1][1]
         assert job_input in messages[1][1]

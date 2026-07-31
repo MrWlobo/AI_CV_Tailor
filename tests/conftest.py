@@ -29,11 +29,12 @@ def valid_payload(sample_pdf_bytes):
         "data": {"job_url": "https://example.com/job-offer"},
     }
 
+
 @pytest.fixture
 def mock_cv_response():
     return CVTailorResponse(
         status="success",
         tailored_cv="Improved CV content here...",
         match_score=85,
-        recommendations=["Add Python keywords", "Highlight leadership skills"]
+        recommendations=["Add Python keywords", "Highlight leadership skills"],
     )
