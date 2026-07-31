@@ -20,7 +20,11 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_url: str = Form(...)):
     tailored_results = get_tailored_results(
         cv_text, job_url
     )
-    
+
+    status = tailored_results["status"]
+    tailored_cv = tailored_results["tailored_cv"]
+    match_score = tailored_results["match_score"]
+    recommendations = tailored_results["recommendations"]
 
     # Return results to frontend
     return {
