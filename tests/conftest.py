@@ -26,7 +26,9 @@ def sample_pdf_bytes():
 def valid_payload(sample_pdf_bytes):
     return {
         "files": {"cv_file": ("cv.pdf", sample_pdf_bytes, "application/pdf")},
-        "data": {"job_url": "https://example.com/job-offer"},
+        "data": {
+            "job_offer": "We are looking for a Senior Python Developer with experience in FastAPI, Docker, and PostgreSQL."
+        },
     }
 
 
