@@ -14,9 +14,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def health_check():
     return {"status": "ok"}
+
 
 @app.post("/tailor")
 async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...)):
@@ -41,4 +43,3 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...))
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
