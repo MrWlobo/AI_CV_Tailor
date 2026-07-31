@@ -9,6 +9,8 @@ const recommendationsParagraph = document.getElementById("recommendations-paragr
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
 
+let cvFile = null;
+
 // Event Listeners
 
 // Clicking field on dropZone
@@ -45,6 +47,17 @@ dropZone.addEventListener("drop", (e) => {
     }
 });
 
+// Saving pdf after selecting it
+dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    cvFile = e.dataTransfer.files[0];
+});
+
+fileInput.addEventListener("change", (e) => {
+    cvFile = e.target.files[0];
+});
+
+
 // Update HTML
 function updateMatchChart(score) {
     percentageText.textContent = `${score}%`;
@@ -61,6 +74,8 @@ function updateRecommendations(recommendations) {
 
 // Submit Button
 submitButton.addEventListener("click", () => {
+
+
     outputDiv.classList.remove("hidden");
 })
 
