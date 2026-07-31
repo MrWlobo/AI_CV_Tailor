@@ -60,6 +60,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Create .env file
+        run: echo "GEMINI_API_KEY=dummy_val" > .env
+
       - name: Build and test containers
         run: docker compose up --build -d
 
