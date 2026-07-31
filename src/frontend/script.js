@@ -2,6 +2,7 @@
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("cv-file");
 const fileNameDisplay = document.getElementById("drop-file-name");
+const jobOfferTextarea = document.getElementById("job-offer-textarea")
 const submitButton = document.getElementById("submit-button");
 const outputDiv = document.getElementById("output");
 const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
@@ -83,11 +84,11 @@ submitButton.addEventListener("click", async () => {
     const result = await tailorCv(cvFile, jobOffer);
 
     if (result) {
-            updateTailoredCv(result["tailored_cv"]);
-            updateMatchChart(result["match_score"]);
-            updateRecommendations(result["recommendations"]);
+        updateTailoredCv(result["tailored_cv"]);
+        updateMatchChart(result["match_score"]);
+        updateRecommendations(result["recommendations"]);
 
-            outputDiv.classList.remove("hidden");
+        outputDiv.classList.remove("hidden");
     }
 });
 
