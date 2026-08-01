@@ -99,7 +99,7 @@ submitButton.addEventListener("click", async () => {
             tailoredCvButton.onclick = () => openPdfInNewTab(result["tailored_cv"]);
 
             outputDiv.classList.remove("hidden");
-            outputDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+            tailoredCvButton.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     } catch (error) {
         alert("Failed to tailor CV. Check the logs for more info.");
