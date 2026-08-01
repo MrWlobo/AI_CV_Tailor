@@ -7,9 +7,11 @@ CV AI Tailor is a web application designed to automatically optimize and tailor 
 
 ## Visuals
 
-![Application Dashboard]()
+### Application Dashboard
+![Application Dashboard](readme_images/dashboard.png)
 
-![Analysis Results]()
+### Analysis Results
+![Analysis Results](readme_images/results.png)
 
 ---
 
