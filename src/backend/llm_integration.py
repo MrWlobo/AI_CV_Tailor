@@ -24,6 +24,9 @@ system_prompt = """
 
     Your input will hav the form of the following f-string:
     f"CV TRANSCRIPT:\n{cv_transcript}\nJOB OFFER:\n{job_offer}"
+
+    Your tailored_cv response will be converted to pdf using xhtml2pdf Python library,
+    so it MUST be a valid HTML file with <style> tags. Use modern layouts and toned colors.
     """
 
 base_model = init_chat_model(
