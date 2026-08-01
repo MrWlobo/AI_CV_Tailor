@@ -36,7 +36,7 @@ def valid_payload(sample_pdf_bytes):
 def mock_cv_response():
     return CVTailorResponse(
         status="success",
-        tailored_cv="Improved CV content here...",
+        tailored_cv="<h1>Tailored CV<h1>",
         match_score=85,
         recommendations=["Add Python keywords", "Highlight leadership skills"],
     )
