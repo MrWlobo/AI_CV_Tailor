@@ -108,6 +108,20 @@ submitButton.addEventListener("click", async () => {
     }
 });
 
+// PDF handling
+function openPdfInNewTab(base64String) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "application/pdf" });
+
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
+}
+
 // Connection to FastAPI
 function tailorCv (cv_file, job_offer) {
     const formData = new FormData();
