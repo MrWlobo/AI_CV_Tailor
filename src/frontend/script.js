@@ -89,6 +89,8 @@ submitButton.addEventListener("click", async () => {
 
     spinner.scrollIntoView({ behavior: "smooth", block: "center" });
 
+    outputDiv.classList.add("hidden");
+
     try {
         const jobOffer = jobOfferTextarea.value;
         const result = await tailorCv(cvFile, jobOffer);
@@ -99,7 +101,7 @@ submitButton.addEventListener("click", async () => {
             tailoredCvButton.onclick = () => openPdfInNewTab(result["tailored_cv"]);
 
             outputDiv.classList.remove("hidden");
-            outputDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+            tailoredCvButton.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     } catch (error) {
         alert("Failed to tailor CV. Check the logs for more info.");
@@ -154,5 +156,8 @@ function tailorCv (cv_file, job_offer) {
         }
         return data;
     })
-    .catch(error => console.error("Error while tailoring the CV:", error));
+    .catch(error => {
+        console.error("Error while tailoring the CV:", error);
+        throw error;
+    });
 }
