@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 def test_tailor_cv_success(mock_get_results, api_client, valid_payload):
     mock_response = MagicMock()
     mock_response.status = "success"
-    mock_response.tailored_cv = "Tailored text"
+    mock_response.tailored_cv = "<h1>Tailored CV</h1>"
     mock_response.match_score = 90
     mock_response.recommendations = ["Skill 1"]
 
