@@ -18,6 +18,7 @@ dependencies = [
     { name = "pytest" },
     { name = "python-dotenv" },
     { name = "python-multipart" },
+    { name = "reportlab" },
     { name = "uvicorn" },
     { name = "xhtml2pdf" },
 ]
@@ -37,6 +38,7 @@ requires-dist = [
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "python-multipart", specifier = ">=0.0.32" },
+    { name = "reportlab", specifier = ">=4.5.1" },
     { name = "uvicorn", specifier = ">=0.52.0" },
     { name = "xhtml2pdf", specifier = ">=0.2.17" },
 ]

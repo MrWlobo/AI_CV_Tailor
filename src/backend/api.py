@@ -3,7 +3,7 @@ import io
 from pypdf import PdfReader
 from backend.llm_integration import get_tailored_results
 from fastapi.middleware.cors import CORSMiddleware
-import io
+import os
 from xhtml2pdf import pisa
 import base64
 
@@ -20,7 +20,7 @@ app.add_middleware(
 
 def convert_html_to_pdf(html_string: str) -> bytes:
     pdf_buffer = io.BytesIO()
-    pisa_status = pisa.CreatePDF(io.StringIO(html_string), dest=pdf_buffer)
+    pisa_status = pisa.CreatePDF(src=html_string, dest=pdf_buffer, encoding="utf-8")
 
     if pisa_status.err:
         raise Exception("Failed to convert HTML to PDF")
