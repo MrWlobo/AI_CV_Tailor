@@ -10,6 +10,7 @@ const recommendationsList = document.getElementById("recommendations-list");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
 const spinner = document.getElementById("loading-spinner");
+const spinnerLabel = document.getElementById("spinner-label");
 
 let cvFile = null;
 
@@ -82,6 +83,7 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
+    spinnerLabel.classList.remove("hidden");
     spinner.classList.remove("hidden");
     submitButton.disabled = true;
 
@@ -103,6 +105,7 @@ submitButton.addEventListener("click", async () => {
         alert("Failed to tailor CV. Check the logs for more info.");
     } finally {
         spinner.classList.add("hidden");
+        spinnerLabel.classList.add("hidden");
         submitButton.disabled = false;
     }
 });
