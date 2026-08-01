@@ -83,13 +83,13 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
-    outputDiv.classList.add("hidden");
-
     spinnerLabel.classList.remove("hidden");
     spinner.classList.remove("hidden");
     submitButton.disabled = true;
 
     spinner.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    outputDiv.classList.add("hidden");
 
     try {
         const jobOffer = jobOfferTextarea.value;
@@ -156,5 +156,8 @@ function tailorCv (cv_file, job_offer) {
         }
         return data;
     })
-    .catch(error => console.error("Error while tailoring the CV:", error));
+    .catch(error => {
+        console.error("Error while tailoring the CV:", error);
+        throw error;
+    });
 }
