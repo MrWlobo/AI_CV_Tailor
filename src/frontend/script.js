@@ -5,11 +5,12 @@ const fileNameDisplay = document.getElementById("drop-file-name");
 const jobOfferTextarea = document.getElementById("job-offer-textarea")
 const submitButton = document.getElementById("submit-button");
 const outputDiv = document.getElementById("output");
-const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
+const tailoredCvButton = document.getElementById("tailored-cv-button");
 const recommendationsList = document.getElementById("recommendations-list");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
 const spinner = document.getElementById("loading-spinner");
+const spinnerLabel = document.getElementById("spinner-label");
 
 let cvFile = null;
 
@@ -66,10 +67,6 @@ function updateMatchChart(score) {
     chart.style.setProperty('--percentage', `${score}%`);
 }
 
-function updateTailoredCv(tailoredCv) {
-    tailoredCvParagraph.textContent = tailoredCv;
-}
-
 function updateRecommendations(recommendations) {
     recommendationsList.innerHTML = "";
     for (const recommendation of recommendations) {
@@ -86,27 +83,46 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
+    spinnerLabel.classList.remove("hidden");
     spinner.classList.remove("hidden");
     submitButton.disabled = true;
+
+    spinner.scrollIntoView({ behavior: "smooth", block: "center" });
 
     try {
         const jobOffer = jobOfferTextarea.value;
         const result = await tailorCv(cvFile, jobOffer);
 
         if (result) {
-            updateTailoredCv(result["tailored_cv"]);
             updateMatchChart(result["match_score"]);
             updateRecommendations(result["recommendations"]);
+            tailoredCvButton.onclick = () => openPdfInNewTab(result["tailored_cv"]);
 
             outputDiv.classList.remove("hidden");
+            outputDiv.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     } catch (error) {
         alert("Failed to tailor CV. Check the logs for more info.");
     } finally {
         spinner.classList.add("hidden");
+        spinnerLabel.classList.add("hidden");
         submitButton.disabled = false;
     }
 });
+
+// PDF handling
+function openPdfInNewTab(base64String) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "application/pdf" });
+
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
+}
 
 // Connection to FastAPI
 function tailorCv (cv_file, job_offer) {
