@@ -5,7 +5,7 @@ const fileNameDisplay = document.getElementById("drop-file-name");
 const jobOfferTextarea = document.getElementById("job-offer-textarea")
 const submitButton = document.getElementById("submit-button");
 const outputDiv = document.getElementById("output");
-const tailoredCvParagraph = document.getElementById("tailored-cv-paragraph");
+const tailoredCvButton = document.getElementById("tailored-cv-button");
 const recommendationsList = document.getElementById("recommendations-list");
 const chart = document.getElementById("match-chart");
 const percentageText = document.getElementById("chart-percentage");
@@ -66,10 +66,6 @@ function updateMatchChart(score) {
     chart.style.setProperty('--percentage', `${score}%`);
 }
 
-function updateTailoredCv(tailoredCv) {
-    tailoredCvParagraph.textContent = tailoredCv;
-}
-
 function updateRecommendations(recommendations) {
     recommendationsList.innerHTML = "";
     for (const recommendation of recommendations) {
@@ -94,9 +90,9 @@ submitButton.addEventListener("click", async () => {
         const result = await tailorCv(cvFile, jobOffer);
 
         if (result) {
-            updateTailoredCv(result["tailored_cv"]);
             updateMatchChart(result["match_score"]);
             updateRecommendations(result["recommendations"]);
+            tailoredCvButton.onclick = () => openPdfInNewTab(result["tailored_cv"]);
 
             outputDiv.classList.remove("hidden");
         }
