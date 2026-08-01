@@ -83,6 +83,8 @@ submitButton.addEventListener("click", async () => {
         return;
     }
 
+    outputDiv.classList.add("hidden");
+
     spinnerLabel.classList.remove("hidden");
     spinner.classList.remove("hidden");
     submitButton.disabled = true;
