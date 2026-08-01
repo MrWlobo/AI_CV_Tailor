@@ -16,13 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def convert_html_to_pdf(html_string: str) -> bytes:
     pdf_buffer = io.BytesIO()
     pisa_status = pisa.CreatePDF(io.StringIO(html_string), dest=pdf_buffer)
-    
+
     if pisa_status.err:
         raise Exception("Failed to convert HTML to PDF")
-        
+
     return pdf_buffer.getvalue()
 
 
