@@ -5,6 +5,7 @@ from backend.llm_integration import get_tailored_results
 from fastapi.middleware.cors import CORSMiddleware
 import io
 from xhtml2pdf import pisa
+import base64
 
 app = FastAPI()
 
@@ -46,10 +47,14 @@ async def tailor_cv(cv_file: UploadFile = File(...), job_offer: str = Form(...))
         # Call LLM to make its assessments
         tailored_results = get_tailored_results(cv_text, job_offer)
 
+        # Get pdf from tailored CV
+        pdf_bytes = convert_html_to_pdf(tailored_results.tailored_cv)
+        pdf_base64 = base64.b64encode(pdf_bytes).decode("utf-8")
+
         # Return results to frontend
         return {
             "status": tailored_results.status,
-            "tailored_cv": convert_html_to_pdf(tailored_results.tailored_cv),
+            "tailored_cv": pdf_base64,
             "match_score": tailored_results.match_score,
             "recommendations": tailored_results.recommendations,
         }
